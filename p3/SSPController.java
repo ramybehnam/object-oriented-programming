@@ -21,6 +21,13 @@ public class SSPController {
 		this.computerPlayer = computerPlayer;			
 		setPoints();
 	}
+	public void userInput(String choise) {
+		String winner = winnerOfRound(choise);
+		showChoise(choise);
+		pointCounter(winner);
+		winnerOfGame();			
+		setPoints();
+	}
 	/*
 	 * Check if there is a winner of the round
 	 * 
@@ -52,7 +59,6 @@ public class SSPController {
 	public void winnerOfGame() {		
 		if(is3points(playerPoints))viewer.showWinner("Player");
 		if(is3points(computerPoints))viewer.showWinner("Computer");
-		
 	}
 	/*
 	 * Sets the points in "SSPViewer" to what point the player and the computer has
