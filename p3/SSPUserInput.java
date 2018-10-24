@@ -22,17 +22,11 @@ public class SSPUserInput extends JPanel {
 	private JButton btnQuit = new JButton("Quit");
 	private JPanel panelChoiceButtons = new JPanel();
 	private String choise="";
-	private String winner="";
 	public SSPUserInput(SSPController controller) {
 		this.controller = controller;
 
-		/*
-		 * Sets the JPanel to 300 pixels wide and 200 pixels high 
-		 * Sets the layout of the to a grid with 3 rows and 1 column
-		 */
 		setPreferredSize(new Dimension(300,200));
 		setLayout(new GridLayout(3,1));
-		
 		setButtonSizes();				
 		gameButtonSettings();
 		
@@ -72,29 +66,19 @@ public class SSPUserInput extends JPanel {
 		btnNewGame.addActionListener( clicked );
 		btnQuit.addActionListener( clicked );
 	}
-	/*
-	 * Controls the events of the button in which the player chooses to press
-	 */
-	private void gameButtonEvent() {
-		winner = controller.winnerOfRound(choise);
-		controller.showChoise(choise);
-		controller.pointCounter(winner);
-		controller.winnerOfGame();			
-		controller.setPoints();
-	}
 	private class isClicked implements ActionListener {
 		public void actionPerformed(ActionEvent e) {				
 			if( e.getSource() == btnRock ) {
 				choise="Rock";
-				gameButtonEvent();
+				controller.userInput(choise);
 			}
 			if( e.getSource() == btnScissors ) {
 				choise="Scissors";	
-				gameButtonEvent();
+				controller.userInput(choise);
 			}
 			if( e.getSource() == btnPaper ) {
 				choise="Paper";	
-				gameButtonEvent();
+				controller.userInput(choise);
 			}
 			if( e.getSource() == btnNewGame ) {
 				controller.newGame();
