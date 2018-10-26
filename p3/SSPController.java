@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * Controls what is happening in the game
  * 
- * Date: 24/10-2018
+ * Date: 26/10-2018
  * @author Mattias Jönsson
  *
  */
@@ -21,6 +21,12 @@ public class SSPController {
 		this.computerPlayer = computerPlayer;			
 		setPoints();
 	}
+	/*
+	 * Gets the choice from the user and runs the
+	 * methods for the game
+	 * 
+	 * @param choice	the choice of the user
+	 */
 	public void userInput(String choise) {
 		String winner = winnerOfRound(choise);
 		showChoise(choise);
@@ -33,7 +39,7 @@ public class SSPController {
 	 * 
 	 * @return winner	the "name" of the winner of the round
 	 */
-	public String winnerOfRound(String pChoise) {
+	private String winnerOfRound(String pChoise) {
 		String winner = "";
 		if(playerPoints<3 && computerPoints<3 ) {			
 			computerChoice = computerPlayer.computerChoise();
@@ -49,28 +55,37 @@ public class SSPController {
 	/*
 	 * Increases the points of the winner of the round with 1
 	 */
-	public void pointCounter(String winner) {
+	private void pointCounter(String winner) {
 		if(winner=="Player") playerPoints++;
 		else if(winner=="Computer") computerPoints++;		
 	}
 	/*
 	 * Checks whether or not there is a winner of the game
 	 */
-	public void winnerOfGame() {		
+	private void winnerOfGame() {		
 		if(is3points(playerPoints))viewer.showWinner("Player");
 		if(is3points(computerPoints))viewer.showWinner("Computer");
 	}
 	/*
 	 * Sets the points in "SSPViewer" to what point the player and the computer has
 	 */
-	public void setPoints(){
+	private void setPoints(){
 		if(playerPoints<=3 && computerPoints<=3 ) this.viewer.setPoints(playerPoints, computerPoints);
 	}
 	/*
 	 * Shows the choice of the player in "SSPViewer"
 	 */
-	public void showChoise(String pChoise) {		
+	private void showChoise(String pChoise) {		
 		if(playerPoints<3 && computerPoints<3 ) this.viewer.showChoise(pChoise, computerChoice);
+	}
+	/*
+	 * Checks if the point is 3
+	 * 
+	 * @param points	the points in which the method checks
+	 */
+	private boolean is3points(int points) {
+		if(points==3) return true;
+		else return false;		
 	}
 	/*
 	 * Quits the game
@@ -85,14 +100,5 @@ public class SSPController {
 		this.computerPoints = 0;
 		this.playerPoints = 0;
 		this.viewer.empty();
-	}
-	/*
-	 * Checks if the point is 3
-	 * 
-	 * @param points	the points in which the method checks
-	 */
-	public boolean is3points(int points) {
-		if(points==3) return true;
-		else return false;		
-	}
+	}	
 }
