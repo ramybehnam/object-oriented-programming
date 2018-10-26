@@ -1,7 +1,5 @@
 package p3;
 
-import java.util.Random;
-
 /**
  * Controls what is happening in the game
  * 
