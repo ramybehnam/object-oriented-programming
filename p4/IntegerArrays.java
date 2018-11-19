@@ -2,7 +2,21 @@ package arrays;
 
 import java.util.Arrays;
 
+/**
+ * This class contains the solutions for exercise 4a
+ * 
+ * @author Mattias Jönsson
+ * Date 14/11-2018
+ *
+ */
 public class IntegerArrays {
+	
+	/**
+	 * Prints out the number in the array
+	 * 
+	 * @param array		the array of numbers
+	 * @return a string of the numbers
+	 */
 	public static String toString(int[] array) {		
 		int l = array.length;
 		String str = "{";
@@ -10,43 +24,91 @@ public class IntegerArrays {
 		str += array[l-1]+"}";
 		return str;		
 	}
-	public static String max(int[] array) {
-		int max = 0;
+
+	/**
+	 * Checks the highest number in the array
+	 * 
+	 * @param array		the array of numbers
+	 * @return a number
+	 */
+	public static int max(int[] array) {
+		int max = Integer.MIN_VALUE;
 		for(int i=0;i<array.length;i++) if(array[i]>max) max=array[i];
-		return ""+max;
+		return max;
 	}
-	public static String min(int[] array) {
+	
+	/**
+	 * Checks the lowest number in the array
+	 * 
+	 * @param array		the array of numbers
+	 * @return a number
+	 */
+	public static int min(int[] array) {
 		int min = Integer.MAX_VALUE;
 		for(int i=0;i<array.length;i++)	if(array[i]<min) min=array[i];
-		return ""+min;
+		return min;
 	}
-	public static String sum(int[] array) {
+	
+	/**
+	 * Checks the sum of the numbers in the array
+	 * 
+	 * @param array		the array of numbers
+	 * @return the sum
+	 */
+	public static int sum(int[] array) {
 		int sum = 0;
 		for(int i=0;i<array.length;i++)sum += array[i];
-		return ""+sum;
+		return sum;
 	}
+	
+	/**
+	 * Checks the average of the numbers in the array
+	 * using the sum method
+	 * 
+	 * @param array		the array of numbers
+	 * @return the average
+	 */
 	public static Object average(int[] array) {
-		int sum = 0;
-		for(int i=0;i<array.length;i++)sum += array[i];
-		return (float)sum/array.length;
+		return (float)sum(array)/array.length;
 	}
-	public static String range(int[] array) {
-		int min = Integer.MAX_VALUE;
-		int max = 0;
-		for(int i=0;i<array.length;i++) if(array[i]<min)min=array[i];		
-		for(int i=0;i<array.length;i++) if(array[i]>max)max=array[i];
-		return min+"-"+max;
+	
+	/**
+	 * Checks the range of the numbers in the array using the
+	 * max and min methods
+	 * 
+	 * @param array		the array of numbers
+	 * @return the range
+	 */
+	public static int range(int[] array) {
+		return max(array)-min(array);
 	}
+	
+	/**
+	 * Copies the given array to an new array 
+	 * 
+	 * @param array		the array of numbers
+	 * @return the new array
+	 */
 	public static int[] copy(int[] array) {
 		int[] newArr = new int[array.length];
-		for(int i=0;i<array.length;i++) {
-			newArr[i]=array[i];
-		}
+		for(int i=0;i<array.length;i++)	newArr[i]=array[i];
 		return newArr;
 	}
+	
+	/**
+	 * Sorts the array in ascending order
+	 * 
+	 * @param array		the array of numbers
+	 */
 	public static void sortAsc(int[] array) {	
 		Arrays.sort(array); 
 	}
+	
+	/**
+	 * Sorts the array in descending order
+	 * 
+	 * @param array		the array of numbers
+	 */
 	public static void sortDesc(int[] array) {
 		int temp;
 		Arrays.sort(array);
@@ -56,27 +118,38 @@ public class IntegerArrays {
 			array[array.length-i-1]=temp;		
 		}
 	}
+	
+	/**
+	 * Checks the median of the numbers in the array
+	 * 
+	 * @param array		the array of numbers
+	 * @return the median
+	 */
 	public static double median(int[] array) {
-		int[] arr = array; 
+		int[] arr = copy(array); 
 		Arrays.sort(arr);
 		double median;
 		if (array.length % 2 == 0) median = ((double)arr[arr.length/2] + (double)arr[arr.length/2 - 1])/2;
 		else median = (double) arr[arr.length/2];
 		return median;
-		
 	}
-	public static String mode(int[] array) {
-		int mode = 0, counter = 0;
-		int[] arr = array, counterArr;		
-		Arrays.sort(arr);
-		for(int i=0;i<arr.length;i++) {
-			if(mode==arr[i]) {
-				counter++;	
-				mode = arr[i];
-			}
-		}
-		
-		
-		return "";		
+	
+	/**
+	 * Checks the mode of the numbers in the array
+	 * 
+	 * @param array		the array of numbers
+	 * @return the mode
+	 */
+	public static int mode(int[] array) {
+		int maxValue = 0, maxCount = 0;
+        for (int i = 0; i < array.length; ++i) {
+            int count = 0;
+            for (int j = 0; j < array.length; ++j)if (array[j] == array[i])count++;
+            if (count > maxCount) {
+                maxCount = count;
+                maxValue = array[i];
+            }
+        }
+        return maxValue;	
 	}
 }
