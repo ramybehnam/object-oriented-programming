@@ -9,7 +9,6 @@ package arrays;
  */
 public class CountryArrays {
 
-	
 	/**
 	 * Prints out the countries
 	 * 
