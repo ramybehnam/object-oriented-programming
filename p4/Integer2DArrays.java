@@ -1,80 +1,102 @@
 package arrays;
 
 import java.util.Arrays;
-
+/**
+ * This class contains the solutions for exercise 4b
+ * 
+ * @author Mattias Jönsson
+ * Date 14/11-2018
+ *
+ */
 public class Integer2DArrays {
+	
+	/**
+	 * Prints out the number in the array
+	 * 
+	 * @param array		the array of numbers
+	 * @return a string of the numbers
+	 */
 	public static String toString(int[][] array) {		
-		String str ="{";
-		int i;
-		for (i = 0; i < array.length-1; i++) {
+		String str ="{";		
+		for (int i = 0; i < array.length; i++) {
 			str+="{";
-			for (int j = 0; j < array[i].length-1; j++) {
+			for (int j = 0; j < array[i].length; j++) {
 				str+=array[i][j];
-				str+= ",";
+				if(j<array[i].length-1)	str+= ",";				
 			}	
-			str+=array[i][array[i].length-1]+"},";
+			str+="}";
+			if(i<array.length-1)str+= ",";	
 		}
-		str+="{";
-		for(int k=0;k<array[i].length-1;k++) {
-			str+=array[i][k]+",";
-		}
-		str+=array[i][array[i].length-1]+"}}";
-
+		str+="}";		
 		return str;		
 	}
 
-	public static String elements(int[][] array) {
+	/**
+	 * Checks the amount of elements in the array
+	 * 
+	 * @param array		the array of numbers
+	 * @return the number of elements
+	 */
+	public static int elements(int[][] array) {
 		int counter=0;
-		for(int i=0;i<array.length;i++) {
-			for(int j=0;j<array[i].length;j++) {
+		for(int i=0;i<array.length;i++)
+			for(int j=0;j<array[i].length;j++)
 				counter++;
-			}
-		}
-		return ""+counter;
+		return counter;
 	}
 
-	public static String max(int[][] array) {
+	/**
+	 * Checks the highest number in the array
+	 * 
+	 * @param array		the array of numbers
+	 * @return a number
+	 */
+	public static int max(int[][] array) {
 		int max=Integer.MIN_VALUE;
-		for(int i=0;i<array.length;i++) {
-			for(int j=0;j<array[i].length;j++) {
-				if(array[i][j]>max) {
+		for(int i=0;i<array.length;i++)
+			for(int j=0;j<array[i].length;j++)
+				if(array[i][j]>max)
 					max=array[i][j];
-				}
-			}
-		}
-		return ""+max;
+		return max;
 	}
 
-	public static String min(int[][] array) {
+	/**
+	 * Checks the lowest number in the array
+	 * 
+	 * @param array		the array of numbers
+	 * @return a number
+	 */
+	public static int min(int[][] array) {
 		int min=Integer.MAX_VALUE;
-		for(int i=0;i<array.length;i++) {
-			for(int j=0;j<array[array.length-1].length;j++) {
-				if(array[i][j]<min) {
+		for(int i=0;i<array.length;i++)
+			for(int j=0;j<array[array.length-1].length;j++)
+				if(array[i][j]<min)
 					min=array[i][j];
-				}
-			}
-		}
-		return ""+min;
+		return min;
 	}
 
-	public static String sum(int[][] array) {
+	/**
+	 * Checks the sum of the numbers in the array
+	 * 
+	 * @param array		the array of numbers
+	 * @return the sum
+	 */
+	public static int sum(int[][] array) {
 		int sum=0;
-		for(int i=0;i<array.length;i++) {
-			for(int j=0;j<array[i].length;j++) {
+		for(int i=0;i<array.length;i++)
+			for(int j=0;j<array[i].length;j++)
 				sum+=array[i][j];
-			}
-		}
-		return ""+sum;
+		return sum;
 	}
 
-	public static Object average(int[][] array) {
-		int sum=0,counter=0;
-		for(int i=0;i<array.length;i++) {
-			for(int j=0;j<array[i].length;j++) {
-				sum+=array[i][j];
-				counter++;
-			}
-		}
-		return (float)sum/counter;
+	/**
+	 * Checks the average of the numbers in the array
+	 * using the sum method
+	 * 
+	 * @param array		the array of numbers
+	 * @return the average
+	 */
+	public static Object average(int[][] array) {			
+		return (float)sum(array)/elements(array);
 	}
 }
