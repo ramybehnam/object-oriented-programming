@@ -1,59 +1,84 @@
 package arrays;
 
+/**
+ * This class contains the solutions for exercise 4c
+ * 
+ * @author Mattias Jönsson
+ * Date 14/11-2018
+ *
+ */
 public class CountryArrays {
 
+	
+	/**
+	 * Prints out the countries
+	 * 
+	 * @param array
+	 * @return A string of the countries
+	 */
 	public static String toString(Country[] array) {
 		String str = "{";
-		for(int i=0;i<array.length-1;i++) {
-			str+="["+array[i].getName()+","+array[i].getPopulation()+"], ";
-		}
-		str+="["+array[array.length-1].getName()+","+array[array.length-1].getPopulation()+"]}";
-		
+		int l = array.length;
+		for(int i=0;i<l-1;i++)str+=array[i]+", ";
+		str+=array[l-1]+"}";
 		return str;
 	}
 
+	/**
+	 * Checks the index of a given county
+	 * 
+	 * @param array		the array of countries
+	 * @param country	the countries being checked
+	 * @return the index of the county, if the country doesn't exist it returns -1
+	 */
 	public static int indexOf(Country[] array, Country country) {
 		int indexOf=-1;
-		for(int i=0;i<array.length;i++) {
-			if(country.equals(array[i])) {
+		for(int i=0;i<array.length;i++)
+			if(country.equals(array[i]))
 				indexOf=i;
-			}
-		}
 		return indexOf;
 	}
 
+	/**
+	 * Checks if a given country is a member
+	 * 
+	 * @param array		the array of countries
+	 * @param country	the countries being checked
+	 * @return true/false depending if the country is a member or not
+	 */
 	public static boolean member(Country[] array, Country country) {
 		boolean isMember=false;
-		for(int i=0;i<array.length;i++) {
-			if(country.equals(array[i])) {
+		for(int i=0;i<array.length;i++)
+			if(country.equals(array[i]))
 				isMember=true;
-			}
-		}
 		return isMember;
 	}
-
-	public static Country min(Country[] array) {
-		long min = Integer.MAX_VALUE;
-		Country c = null;
-		for(int i=0;i<array.length;i++) {
-			if(array[i].getPopulation()<min) {
-				min = array[i].getPopulation();
-				c=array[i];
-			}
-		}
-		return c;
-	}
-
+	
+	/**
+	 * Checks which country has the biggest population
+	 * 
+	 * @param array		the array of countries
+	 * @return	a country
+	 */
 	public static Country max(Country[] array) {
-		long max = 0;
-		Country c = null;
-		for(int i=0;i<array.length;i++) {
-			if(array[i].getPopulation()>max) {
-				max = array[i].getPopulation();
-				c=array[i];
-			}
-		}
-		return c;
+		Country max = array[array.length-1];
+		for(int i=array.length-1;i>=0;i--)
+			if(max.compareTo(array[i])<0)
+				max=array[i];									
+		return max;
 	}
 	
+	/**
+	 * Checks which country has the smallest population
+	 * 
+	 * @param array		the array of countries
+	 * @return	a country
+	 */
+	public static Country min(Country[] array) {
+		Country min = array[0];
+		for(int i=0;i<array.length;i++)
+			if(min.compareTo(array[i])>0)
+				min=array[i];						
+		return min;
+	}		
 }
