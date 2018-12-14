@@ -1,135 +1,50 @@
 package p6;
 
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-
 public class Controller {
-	private Timer timer;
-	private Random random = new Random();
-	private ColorDisplayDemo demo;
-	private int[][] charA = {{Color.BLUE,Color.BLUE,Color.BLUE,Color.WHITE,Color.BLUE,Color.BLUE,Color.BLUE},
-			{Color.BLUE,Color.BLUE,Color.WHITE,Color.BLUE,Color.WHITE,Color.BLUE,Color.BLUE},
-			{Color.BLUE,Color.BLUE,Color.WHITE,Color.BLUE,Color.WHITE,Color.BLUE,Color.BLUE},
-			{Color.BLUE,Color.BLUE,Color.WHITE,Color.WHITE,Color.WHITE,Color.BLUE,Color.BLUE},
-			{Color.BLUE,Color.WHITE,Color.BLUE,Color.BLUE,Color.BLUE,Color.WHITE,Color.BLUE},
-			{Color.BLUE,Color.WHITE,Color.BLUE,Color.BLUE,Color.BLUE,Color.WHITE,Color.BLUE},
-			{Color.BLUE,Color.WHITE,Color.BLUE,Color.BLUE,Color.BLUE,Color.WHITE,Color.BLUE}};
-	private int[][] charR = {{Color.TRANSPARENT,Color.WHITE,Color.WHITE,Color.WHITE,Color.WHITE,Color.TRANSPARENT,Color.TRANSPARENT},
-			{Color.TRANSPARENT,Color.WHITE,Color.TRANSPARENT,Color.TRANSPARENT,Color.TRANSPARENT,Color.WHITE,Color.TRANSPARENT},
-			{Color.TRANSPARENT,Color.WHITE,Color.TRANSPARENT,Color.TRANSPARENT,Color.TRANSPARENT,Color.WHITE,Color.TRANSPARENT},
-			{Color.TRANSPARENT,Color.WHITE,Color.WHITE,Color.WHITE,Color.WHITE,Color.TRANSPARENT,Color.TRANSPARENT},
-			{Color.TRANSPARENT,Color.WHITE,Color.TRANSPARENT,Color.WHITE,Color.TRANSPARENT,Color.TRANSPARENT,Color.TRANSPARENT},
-			{Color.TRANSPARENT,Color.WHITE,Color.TRANSPARENT,Color.TRANSPARENT,Color.WHITE,Color.TRANSPARENT,Color.TRANSPARENT},
-			{Color.TRANSPARENT,Color.WHITE,Color.TRANSPARENT,Color.TRANSPARENT,Color.TRANSPARENT,Color.WHITE,Color.TRANSPARENT}};
-	private int[][] stamp = new int[7][7];
+	private Viewer viewer;
+	private Array7x7 array;
 	
-	public Controller(ColorDisplayDemo demo) {
-		this.demo = demo;
-		demo.setController(this);
+	/**
+	 * Reads the row of the array given 
+	 * by the parameter and displays it.
+	 * 
+	 * @param row  which row will be read 
+	 */
+	public void readRow(int row) {
+		Array7 a7 = array.getRow(row);
+		viewer.setRow(a7);
+	}
+	/**
+	 * Reads the column of the array given 
+	 * by the parameter and displays it.
+	 * 
+	 * @param col  which column will be read 
+	 */
+	public void readCol(int col) {
+		Array7 a7 = array.getCol(col);
+		viewer.setColum(a7);
 	}
 	
-	private void show(int[][] arr) {
-		for(int row=0; row<stamp.length; row++) {
-			for(int col=0; col<stamp[row].length; col++) {
-				stamp[row][col] = arr[row][col];
-			}
-		}
-		demo.updateDisplay(stamp);
+	/**
+	 * Writes the array given by the parameter
+	 * on the row given by the parameter
+	 * 
+	 * @param row  in which row the array will be written
+	 * @param arr7  the array to be written
+	 */
+		public void writeRow(int row, Array7 arr7) {
+		viewer.setRowInArray(row,arr7);
 	}
 
-	public void showA() {
-		show(charA);
-	}
-
-	public void showR() {
-		show(charR);
-	}
-	
-
-	public void showRandom() {
-		int red, green, blue;
-		for(int row=0; row<stamp.length; row++) {
-			for(int col=0; col<stamp[row].length; col++) {
-				red = random.nextInt(256);
-				green = random.nextInt(256);
-				blue = random.nextInt(256);
-				stamp[row][col] = Color.rgb(red, green, blue);
-			}
-		}
-		demo.updateDisplay(stamp);
-	}
-
-	public void useTimer() {
-		timer = new Timer();
-		demo.enableButtons(false);
-		timer.schedule(new RandomColors(), 500, 500);
-		
+	/**
+	 * Writes the array given by the parameter
+	 * on the column given by the parameter
+	 * 
+	 * @param col  in which column the array will be written
+	 * @param arr7  the array to be written
+	 */
+	public void writeCol(int col, Array7 arr7) {
+		viewer.setColumInArray(col,arr7);
 	}
 	
-	public void fadeOut() {
-		timer = new Timer();
-		demo.enableButtons(false);
-		timer.schedule(new FadeOut(), 20, 20);
-	}
-	
-	private void transparency() {
-		int alpha, red, green, blue;
-		for(int row=0; row<stamp.length; row++) {
-			for(int col=0; col<stamp[row].length; col++) {
-				
-				alpha = Color.alpha(stamp[row][col]);
-				if(alpha>0)
-					alpha--;
-				red = Color.red(stamp[row][col]);
-				green = Color.green(stamp[row][col]);
-				blue = Color.blue(stamp[row][col]);
-				stamp[row][col] = Color.argb(alpha, red, green, blue);
-			}
-		}
-		demo.updateDisplay(stamp);
-	}
-	
-	private class RandomColors extends TimerTask {
-		private int counter = 0;
-		public void run() {
-			if(counter<10) {
-				counter++;
-				showRandom();
-			} else {
-				timer.cancel(); // Can't use Timer-instance anymore
-				demo.enableButtons(true);
-			}
-		}
-	}
-	
-	private class FadeOut extends TimerTask {
-		private int counter = 255;
-		public void run() {
-			if(counter>=0) {
-				transparency();
-				counter--;
-			} else {
-				timer.cancel();
-				demo.enableButtons(true);
-			}
-		}
-	}
-
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				ColorDisplayDemo demo = new ColorDisplayDemo(Color.BLACK, Color.GRAY);
-				new Controller(demo);
-				JFrame frame = new JFrame();
-				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				frame.add(demo);
-				frame.pack();
-				frame.setVisible(true);
-			}
-		});
-	}
 }
